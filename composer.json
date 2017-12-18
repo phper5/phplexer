@@ -1,3 +1,6 @@
 {
-    "name": "phper5/phplexer"
+    "name": "phper5/phplexer",
+    "autoload": {
+        "psr-4": {"diandi\\": "src/"}
+    }
 }
