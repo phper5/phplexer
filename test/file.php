@@ -7,8 +7,11 @@
  */
 require __DIR__ . '/../vendor/autoload.php';
 $file = '/data/lan';
+$str = 'ab1 c 3 dsf 34sdfd ';
+
+
 $l = new \diandi\Lexer($file);
-print_r($l->read());
+print_r($l->read(0));
 print_r($l->peek(0));
 print_r($l->peek(1));
 //print_r($l->peek(2));
