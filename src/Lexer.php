@@ -23,23 +23,23 @@ class Lexer
             throw new \Exception($file."文件不存在");
         }
     }
-    private function  getToken($code,&$matches)
+    private function  getToken($code,&$matches,$lineNum,$pos)
     {
         if (in_array($code,$matches[2])) //注释
         {
-            return '2'.$code;
+            return null;
         }elseif (in_array($code,$matches[3])) //数字
         {
-            return '3'.$code;
+            return new \diandi\stone\NumToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[4])) //字符串
         {
-            return '4'.$code;
+            return new \diandi\stone\StrToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[6])) //变量
         {
-            return '5'.$code;
+            return new \diandi\stone\IdToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[7])) //运算符 ;
         {
-            return '7'.$code;
+            return new \diandi\stone\IdToken($lineNum,$pos,$code);
         }
     }
     private function readLine()
@@ -47,22 +47,24 @@ class Lexer
         if($line = fgets($this->fp))
         {
             $this->lineNum++;
-            preg_match_all(self::$regexPat,$line,$matches);print_r($matches);
-            $pos = 0;
-            $posEnd = strlen($line);
-            while($pos < $posEnd)
-            {
-                //cong match开始找
-            }
+            preg_match_all(self::$regexPat,$line,$matches);
+            $lastPos = 0;
             foreach ($matches[1] as $code)
             {
                 if (empty($code))
                 {
                     continue;
                 }
-                $token = $this->getToken($code,$matches,$this->lineNum);
+                $startPos = strpos($line,$code);
+                $len = strlen($code);
+                $line = substr($line,$startPos+$len);
+                $lastPos = $lastPos+$startPos+$len;
+                $token = $this->getToken($code,$matches,$this->lineNum,$lastPos-$len+1);
                 //分析读到的数据写入queue
-                $this->queue[]=$token;
+                if ($token instanceof  \diandi\stone\Token)
+                {
+                    $this->queue[]=$token;
+                }
             }
             return true;
         }
@@ -82,7 +84,7 @@ class Lexer
         {
             return array_shift($this->queue);
         }
-        return \diandi\stone\Token::getEOFToken();
+        return new \diandi\stone\EOFToken();
     }
 
     /**
@@ -95,7 +97,7 @@ class Lexer
         if ($this->fillQueue($i))
             return $this->queue[$i];
         else
-            return \diandi\stone\Token::getEOFToken();
+            return new \diandi\stone\EOFToken();
     }
     public function fillQueue(int $i)
     {

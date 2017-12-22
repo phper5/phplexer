@@ -1,0 +1,5 @@
+a="zh\"shige"; i = 0;jj=3 //剩下的就是注释
+j= i +  9
+while i<100 {
+ i = j+ i*2
+}

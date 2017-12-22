@@ -10,17 +10,26 @@ class Token
 {
     //所在的行号
     private $lineNum;
-    public function __construct(int $line)
+    //所在的列
+    private $pos;
+    protected $value;
+    static protected $type=self::TYPE_EOF;
+
+    const TYPE_EOF = 0;
+    const TYPE_STR = 1;
+    const TYPE_NUM = 2;
+    const TYPE_ID = 3;
+    public function __construct(int $line,int $pos)
     {
         $this->lineNum = $line;
+        $this->pos = $pos;
     }
-    public static function getEOFToken()
+    public function getText()
     {
-        static $token = null;
-        if ($token === null)
-        {
-            $token = new Token(-1);
-        }
-        return $token;
+        return $this->value;
+    }
+    public function getType()
+    {
+        return static::$type;
     }
 }
