@@ -1,17 +1,18 @@
 <?php
 
-namespace diandi\stone;
-class IdToken extends \diandi\stone\Token
+namespace diandi\stone\token;
+class StrToken extends \diandi\stone\token\Token
 {
 
-    static protected $type=self::TYPE_ID;
+    static protected $type=self::TYPE_STR;
     public function __construct(int $line,int $pos,string $val)
     {
         parent::__construct($line,$pos);
         $this->value = $val;
     }
-    public function isIdentifier()
+    public function isString()
     {
         return true;
     }
+
 }

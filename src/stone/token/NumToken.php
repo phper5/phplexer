@@ -1,7 +1,7 @@
 <?php
 
-namespace diandi\stone;
-class NumToken extends \diandi\stone\Token
+namespace diandi\stone\token;
+class NumToken extends \diandi\stone\token\Token
 {
 
     static protected $type=self::TYPE_NUM;

@@ -30,16 +30,16 @@ class Lexer
             return null;
         }elseif (in_array($code,$matches[3])) //数字
         {
-            return new \diandi\stone\NumToken($lineNum,$pos,$code);
+            return new \diandi\stone\token\NumToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[4])) //字符串
         {
-            return new \diandi\stone\StrToken($lineNum,$pos,$code);
+            return new \diandi\stone\token\StrToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[6])) //变量
         {
-            return new \diandi\stone\IdToken($lineNum,$pos,$code);
+            return new \diandi\stone\token\IdToken($lineNum,$pos,$code);
         }elseif (in_array($code,$matches[7])) //运算符 ;
         {
-            return new \diandi\stone\IdToken($lineNum,$pos,$code);
+            return new \diandi\stone\token\IdToken($lineNum,$pos,$code);
         }
     }
     private function readLine()
@@ -61,7 +61,7 @@ class Lexer
                 $lastPos = $lastPos+$startPos+$len;
                 $token = $this->getToken($code,$matches,$this->lineNum,$lastPos-$len+1);
                 //分析读到的数据写入queue
-                if ($token instanceof  \diandi\stone\Token)
+                if ($token instanceof  \diandi\stone\token\Token)
                 {
                     $this->queue[]=$token;
                 }
@@ -84,7 +84,7 @@ class Lexer
         {
             return array_shift($this->queue);
         }
-        return new \diandi\stone\EOFToken();
+        return new \diandi\stone\token\EOFToken();
     }
 
     /**
@@ -97,7 +97,7 @@ class Lexer
         if ($this->fillQueue($i))
             return $this->queue[$i];
         else
-            return new \diandi\stone\EOFToken();
+            return new \diandi\stone\token\EOFToken();
     }
     public function fillQueue(int $i)
     {

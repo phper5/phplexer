@@ -1,6 +1,6 @@
 <?php
-namespace diandi\stone;
-class  EOFToken extends \diandi\stone\Token
+namespace diandi\stone\token;
+class  EOFToken extends \diandi\stone\token\Token
 {
     public function __construct()
     {

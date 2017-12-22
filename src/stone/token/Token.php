@@ -5,7 +5,7 @@
  * Date: 12/14/17
  * Time: 3:33 PM
  */
-namespace diandi\stone;
+namespace diandi\stone\token;
 class Token
 {
     //所在的行号
@@ -31,5 +31,12 @@ class Token
     public function getType()
     {
         return static::$type;
+    }
+    public function getLocation()
+    {
+        return "at line " + $this->lineNum." col "+$this->pos;
+    }
+    public function getNumber() {
+        throw new \Exception("not number token");
     }
 }
