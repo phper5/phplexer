@@ -13,6 +13,6 @@ class PrimaryExpr extends  ASTLeaf
 {
     public static function create($list)
     {
-        return count($list)==1?$list[0]:new self($list);
+        return count($list) == 1 ? $list[0] : new self($list);
     }
 }
