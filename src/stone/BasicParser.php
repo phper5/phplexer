@@ -30,18 +30,21 @@ class BasicParser
         $this->reserved[] = "}";
         $this->reserved[] = new EOFToken();
 
-        $this->operators->add("=", 1, Operators.RIGHT);
-        $this->operators->add("==", 2, Operators.LEFT);
-        $this->operators->add(">", 2, Operators.LEFT);
-        $this->operators->add("<", 2, Operators.LEFT);
-        $this->operators->add("+", 3, Operators.LEFT);
-        $this->operators->add("-", 3, Operators.LEFT);
-        $this->operators->add("*", 4, Operators.LEFT);
-        $this->operators->add("/", 4, Operators.LEFT);
-        $this->operators->add("%", 4, Operators.LEFT);
+        $this->operators->add("=", 1, Operators::RIGHT);
+        $this->operators->add("==", 2, Operators::LEFT);
+        $this->operators->add(">", 2, Operators::LEFT);
+        $this->operators->add("<", 2, Operators::LEFT);
+        $this->operators->add("+", 3, Operators::LEFT);
+        $this->operators->add("-", 3, Operators::LEFT);
+        $this->operators->add("*", 4, Operators::LEFT);
+        $this->operators->add("/", 4, Operators::LEFT);
+        $this->operators->add("%", 4, Operators::LEFT);
     }
     public function parse(Lexer $lexer)
     {
-        return $this->program->parse($lexer);
+        $expr0 = Parser::rule();
+        $program = Parser::rule()->sep(["("])->ast($expr0)->sep([")"]);
+        return $program->parse($lexer);
+        //return $this->program->parse($lexer);
     }
 }

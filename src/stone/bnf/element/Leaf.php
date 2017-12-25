@@ -10,23 +10,60 @@ namespace diandi\stone\bnf\element;
 
 
 use diandi\Lexer;
+use diandi\stone\ast\ASTLeaf;
 use diandi\stone\ast\ASTList;
+use diandi\stone\token\Token;
 
 class Leaf extends Element
 {
-    protected $tokens;
-    public function __construct($pat)
+    protected $tokens = [];
+    public function __construct(array $pat)
     {
         $this->tokens = $pat;
     }
 
     protected function match(Lexer $lexer)
     {
-        // TODO: Implement match() method.
+        // var Token
+        $token = $lexer->peek();
+        if ($token->getType() == Token::TYPE_ID)
+        {
+            foreach ($this->tokens as $t)
+            {
+                if ($t == $t->getText())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    protected function parse(Lexer $lexer, array &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
-        // TODO: Implement parse() method.
+
+        $token = $lexer->read();
+        if ($token->getType() == Token::TYPE_ID)
+        {
+            foreach ($this->tokens as $t)
+            {
+                if ($t == $token->getText())
+                {
+                    $this->find($list,$token);
+                    return ;
+                }
+            }
+        }
+        if (count($this->tokens)>0)
+        {
+            throw  new \Exception('ParseException'.($this->tokens[0] ). " expected ". $token->getText());
+        }
+        else{
+            throw new \Exception('ParseException'.$token);
+        }
+    }
+    public function find(array &$list, Token $token)
+    {
+        $list[] = new ASTLeaf($token);
     }
 }

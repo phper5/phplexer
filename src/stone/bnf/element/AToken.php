@@ -25,7 +25,7 @@ abstract class AToken extends Element
         }
         $this->factory = Factory::get($type,Token::class);
     }
-    protected function parse(Lexer $lexer, array &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
         $token = $lexer->read();
         if ($this->test($token))

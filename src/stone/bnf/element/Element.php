@@ -15,5 +15,5 @@ use diandi\stone\ast\ASTList;
 abstract class Element
 {
     protected abstract function match(Lexer $lexer);
-    protected abstract function parse(Lexer $lexer,array &$list);
+    public abstract function parse(Lexer $lexer,array &$list);
 }

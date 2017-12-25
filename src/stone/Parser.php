@@ -12,6 +12,8 @@ namespace diandi\stone;
 use diandi\Lexer;
 use diandi\stone\ast\ASTList;
 use diandi\stone\ast\ASTree;
+use diandi\stone\bnf\element\Skip;
+use diandi\stone\bnf\element\Tree;
 
 class Parser
 {
@@ -72,10 +74,28 @@ class Parser
     public function parse(Lexer $lexer)
     {
         $result = [];
-        foreach ($this->elements as $e)
+        foreach ($this->elements as $ele)
         {
-            $e->parse($lexer,$result);
+            $ele->parse($lexer,$result);
         }
         return ($this->factory)($result);
+    }
+    /**
+     * 向语法规则中添加未包含于抽象语法树的终结符 与pat匹配的标识符
+     *
+     * @return Parser
+     */
+    public function sep(array $pat) {
+        $this->elements[] = new Skip($pat);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加非终结符 $p
+     *
+     * @return Parser
+     */
+    public function ast(Parser $p) {
+        $this->elements[] = new Tree($p);
+        return $this;
     }
 }

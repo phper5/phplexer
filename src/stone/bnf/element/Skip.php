@@ -14,7 +14,7 @@ use diandi\stone\token\Token;
 class Skip extends Leaf
 {
 
-    protected function find(array $list ,Token $t)
+    public function find(array &$list ,Token $token)
     {
 
     }

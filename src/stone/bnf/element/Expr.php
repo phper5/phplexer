@@ -20,7 +20,7 @@ class Expr extends Element
         // TODO: Implement match() method.
     }
 
-    protected function parse(Lexer $lexer, array &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
         // TODO: Implement parse() method.
     }

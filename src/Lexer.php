@@ -13,7 +13,7 @@ class Lexer
     private $queue = [];
     private $hasMore = true;
                                   //   注释 2  |数字 3   |字符串(4) 5?             |变量(6)                     |+=*/ == >= <= && || ;(7)
-    private  static  $regexPat = '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|(==|<=|>=|&&|\|\||[=+\-\*\/;]))?/';
+    private  static  $regexPat = '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|(==|<=|>=|&&|\|\||[\(\)=+\-\*\/;]))?/';
      //todo 仅支持+=/×；其他特殊字符有待完善
     public function __construct(string $file)
     {
