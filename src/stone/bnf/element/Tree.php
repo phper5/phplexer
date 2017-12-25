@@ -23,7 +23,7 @@ class Tree extends Element
     {
         $this->parser = $parser;
     }
-    public function parse(Lexer $lexer, ASTList &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
         $list[]=$this->parse->parser($lexer);
     }

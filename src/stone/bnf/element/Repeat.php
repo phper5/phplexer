@@ -22,7 +22,7 @@ class Repeat extends Element
         $this->parser = $parser;
         $this->onlyOnce = $once;
     }
-    public function parse(Lexer $lexer, ASTList &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
         while ($this->parser.match($lexer))
         {

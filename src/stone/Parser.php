@@ -44,20 +44,7 @@ class Parser
         $this->elements = [];
         if ($object != null)
         {
-            if (method_exists($object,'create'))
-            {
-                $this->factory = function ($arg) use ($object)
-                {
-                    return call_user_func([$object,'create'],$arg);
-                };
-            }
-            else{
-                $this->factory = function ($arg) use ($object)
-                {
-                    $class = get_class($object);
-                    return new $class();
-                };
-            }
+            $this->factory = Factory::get($object,null);
         }
         else{
             $this->factory = function ($arg){

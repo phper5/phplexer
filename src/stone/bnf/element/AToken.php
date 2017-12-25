@@ -11,6 +11,7 @@ namespace diandi\stone\bnf\element;
 
 use diandi\Lexer;
 use diandi\stone\ast\ASTList;
+use diandi\stone\Factory;
 use diandi\stone\token\Token;
 
 abstract class AToken extends Element
@@ -22,15 +23,15 @@ abstract class AToken extends Element
         {
             $type = ASTList::class;
         }
-        $factory = '';//to do
+        $this->factory = Factory::get($type,Token::class);
     }
-    protected function parse(Lexer $lexer, ASTList &$list)
+    protected function parse(Lexer $lexer, array &$list)
     {
         $token = $lexer->read();
         if ($this->test($token))
         {
-            //ASTree leaf = factory.make(t);
-            //res.add(leaf);
+            $leaf = ($this->factory)($token);
+            $list[] = $leaf;
         }
         else{
             throw new \Exception('ParseException');

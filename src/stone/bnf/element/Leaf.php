@@ -25,7 +25,7 @@ class Leaf extends Element
         // TODO: Implement match() method.
     }
 
-    protected function parse(Lexer $lexer, ASTList &$list)
+    protected function parse(Lexer $lexer, array &$list)
     {
         // TODO: Implement parse() method.
     }

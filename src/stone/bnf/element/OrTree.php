@@ -19,7 +19,7 @@ class OrTree extends Element
     {
         $this->parsers = $p;
     }
-    public function parse(Lexer $lexer, ASTList &$list)
+    public function parse(Lexer $lexer, array &$list)
     {
         if ($p = $this->choose($lexer))
         {
