@@ -11,6 +11,7 @@ namespace diandi\stone\bnf\element;
 
 use diandi\Lexer;
 use diandi\stone\ast\ASTList;
+use diandi\stone\ParseException;
 
 class OrTree extends Element
 {
@@ -26,7 +27,7 @@ class OrTree extends Element
             $list[]=$p->parse($lexer);
         }
         else{
-            throw new \Exception('ParseException'.$lexer->peek(0));
+             ParseException::throwByToken($lexer->peek(0));
         }
 
     }

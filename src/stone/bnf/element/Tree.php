@@ -18,18 +18,18 @@ class Tree extends Element
     /**
      * @var Parser
      */
-    protected $parser;
-    public function __construct($parser)
+    protected $parse;
+    public function __construct($parse)
     {
-        $this->parser = $parser;
+        $this->parse = $parse;
     }
     public function parse(Lexer $lexer, array &$list)
     {
-        $list[]=$this->parse->parser($lexer);
+        $list[]=$this->parse->parse($lexer);
     }
     public function match(Lexer $lexer)
     {
-        return $this->parser->match($lexer);
+        return $this->parse->match($lexer);
     }
 
 }

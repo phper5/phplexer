@@ -12,6 +12,7 @@ namespace diandi\stone\bnf\element;
 use diandi\Lexer;
 use diandi\stone\ast\ASTLeaf;
 use diandi\stone\ast\ASTList;
+use diandi\stone\ParseException;
 use diandi\stone\token\Token;
 
 class Leaf extends Element
@@ -56,10 +57,10 @@ class Leaf extends Element
         }
         if (count($this->tokens)>0)
         {
-            throw  new \Exception('ParseException'.($this->tokens[0] ). " expected ". $token->getText());
+            ParseException::throwByMsgAndToken($this->tokens[0]." expected.",$token);
         }
         else{
-            throw new \Exception('ParseException'.$token);
+            ParseException::throwByToken($token);
         }
     }
     public function find(array &$list, Token $token)

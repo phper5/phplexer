@@ -12,6 +12,7 @@ namespace diandi\stone\bnf\element;
 use diandi\Lexer;
 use diandi\stone\ast\ASTList;
 use diandi\stone\Factory;
+use diandi\stone\ParseException;
 use diandi\stone\token\Token;
 
 abstract class AToken extends Element
@@ -34,7 +35,7 @@ abstract class AToken extends Element
             $list[] = $leaf;
         }
         else{
-            throw new \Exception('ParseException');
+            ParseException::throwByToken($token);
         }
     }
     public function match(Lexer $lexer)

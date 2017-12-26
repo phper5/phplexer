@@ -34,7 +34,7 @@ class Token
     }
     public function getLocation()
     {
-        return "at line " + $this->lineNum." col "+$this->pos;
+        return "at line " . $this->lineNum." col ".$this->pos;
     }
     public function getNumber() {
         throw new \Exception("not number token");
