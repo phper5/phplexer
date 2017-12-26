@@ -6,7 +6,7 @@ use diandi\stone\token\EOFToken;
 use diandi\stone\Parser;
 
 require __DIR__ . '/../vendor/autoload.php';
-$file = 'lan4';
+$file = 'lan4_2';
 $str = 'ab1 c 3 dsf 34sdfd ';
 
 
@@ -14,9 +14,9 @@ $l = new \diandi\Lexer($file);
 $basic = new \diandi\stone\BasicParser();
 
 $expr0 = Parser::rule();
-$program = Parser::rule()->sep(["("])->ast($expr0)->sep([")"]);
+$program = Parser::rule()->number(\diandi\stone\ast\NumberLiteral::class);
 
 while ( !($l->peek(0) instanceof  \diandi\stone\token\EOFToken)) {//读取下一个token不是结束
-     $program->parse($l);
+    $ast = $program->parse($l);
     print_r("=> " . $ast->toString());
 }

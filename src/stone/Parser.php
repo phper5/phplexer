@@ -15,6 +15,7 @@ use diandi\stone\ast\ASTree;
 use diandi\stone\bnf\element\Skip;
 use diandi\stone\bnf\element\Tree;
 
+
 class Parser
 {
     protected $elements = [];
@@ -96,6 +97,15 @@ class Parser
      */
     public function ast(Parser $p) {
         $this->elements[] = new Tree($p);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加终结符 整型字面量
+     *
+     * @return Parser
+     */
+    public function number($clazz) {
+        $this->elements[] = new \diandi\stone\bnf\element\NumToken($clazz);
         return $this;
     }
 }
