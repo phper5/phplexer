@@ -13,7 +13,7 @@ class NegativeExpr extends ASTList
 {
     public function operand()
     {
-        return $this->child(0);
+        return $this->child(0)->toString();
     }
     public function toString()
     {

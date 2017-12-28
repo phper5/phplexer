@@ -12,8 +12,13 @@ namespace diandi\stone;
 use diandi\Lexer;
 use diandi\stone\ast\ASTList;
 use diandi\stone\ast\ASTree;
+use diandi\stone\bnf\element\Expr;
+use diandi\stone\bnf\element\IdToken;
+use diandi\stone\bnf\element\OrTree;
 use diandi\stone\bnf\element\Skip;
+use diandi\stone\bnf\element\StrToken;
 use diandi\stone\bnf\element\Tree;
+use diandi\stone\bnf\Operators;
 
 
 class Parser
@@ -68,16 +73,16 @@ class Parser
         {
             return true;
         }else{
-            $e = $this->elements[0];
-            return $e->match($lexer);
+            $element = $this->elements[0];
+            return $element->match($lexer);
         }
     }
     public function parse(Lexer $lexer)
     {
         $result = [];
-        foreach ($this->elements as $ele)
+        foreach ($this->elements as $element)
         {
-            $ele->parse($lexer,$result);
+            $element->parse($lexer,$result);
         }
         return ($this->factory)($result);
     }
@@ -86,7 +91,8 @@ class Parser
      *
      * @return Parser
      */
-    public function sep(array $pat) {
+    public function sep() {
+        $pat = func_get_args();
         $this->elements[] = new Skip($pat);
         return $this;
     }
@@ -106,6 +112,47 @@ class Parser
      */
     public function number($clazz) {
         $this->elements[] = new \diandi\stone\bnf\element\NumToken($clazz);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加若干个由or关系链接的非终结符 p
+     *
+     * @return Parser
+     */
+    public function or() {
+        $p = func_get_args();
+        $this->elements[] = new OrTree($p);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加终结符 除保留字r之外的标识符
+     *
+     * @return Parser
+     */
+    public function identifier($class,&$reserved)
+    {
+        $this->elements[] = new IdToken($class,$reserved);
+        return $this;
+    }
+
+    /**
+     * 向语法规则中添加终结符 字符串字面量
+     *
+     * @return Parser
+     */
+    public function string($class)
+    {
+        $this->elements[] = new StrToken($class);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加双目运算符 subexp 因子 operators运算符
+     *
+     * @return Parser
+     */
+    public  function expression($class,Parser $subexp,Operators $operators)
+    {
+        $this->elements[] = new Expr($class, $subexp, $operators);
         return $this;
     }
 }

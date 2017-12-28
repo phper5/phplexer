@@ -21,7 +21,7 @@ class IdToken extends  AToken
     }
     protected function test(Token $t)
     {
-        return ($t->getType() == Token::TYPE_ID) && !$this->reserved.contains($t->getText());
+        return ($t->getType() == Token::TYPE_ID) && !in_array($t->getText(),$this->reserved);
     }
 
 }

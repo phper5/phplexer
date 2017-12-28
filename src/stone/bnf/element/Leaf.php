@@ -23,15 +23,15 @@ class Leaf extends Element
         $this->tokens = $pat;
     }
 
-    protected function match(Lexer $lexer)
+    public function match(Lexer $lexer)
     {
         // var Token
-        $token = $lexer->peek();
+        $token = $lexer->peek(0);
         if ($token->getType() == Token::TYPE_ID)
         {
             foreach ($this->tokens as $t)
             {
-                if ($t == $t->getText())
+                if ($t == $token->getText())
                 {
                     return true;
                 }

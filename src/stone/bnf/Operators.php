@@ -22,5 +22,9 @@ class Operators
     {
         self::$map[$name] = new Precedence($prec,$leftAssoc);
     }
+    public function get($name)
+    {
+        return isset(self::$map[$name])?self::$map[$name]:null;
+    }
 
 }

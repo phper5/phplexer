@@ -24,4 +24,13 @@ class Precedence
         $this->val = $val;
         $this->leftAssoc = $leftAssoc;
     }
+    public function getValue()
+    {
+        return $this->val;
+    }
+    public function isLeftAssoc()
+    {
+        return $this->leftAssoc;
+    }
+
 }
