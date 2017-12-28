@@ -15,6 +15,7 @@ use diandi\stone\ast\ASTree;
 use diandi\stone\bnf\element\Expr;
 use diandi\stone\bnf\element\IdToken;
 use diandi\stone\bnf\element\OrTree;
+use diandi\stone\bnf\element\Repeat;
 use diandi\stone\bnf\element\Skip;
 use diandi\stone\bnf\element\StrToken;
 use diandi\stone\bnf\element\Tree;
@@ -153,6 +154,26 @@ class Parser
     public  function expression($class,Parser $subexp,Operators $operators)
     {
         $this->elements[] = new Expr($class, $subexp, $operators);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加可省略的非终结符 p
+     *
+     * @return Parser
+     */
+    public function option(Parser $p)
+    {
+        $this->elements[] = new Repeat($p,true);
+        return $this;
+    }
+    /**
+     * 向语法规则中添加至少出现0次的非终结符 p
+     *
+     * @return Parser
+     */
+    public function repeat(Parser $p)
+    {
+        $this->elements[] = new Repeat($p,false);
         return $this;
     }
 }

@@ -6,7 +6,7 @@ use diandi\stone\token\EOFToken;
 use diandi\stone\Parser;
 
 require __DIR__ . '/../vendor/autoload.php';
-$file = 'lan4_4';
+$file = 'lan4_5';
 
 
 $l = new \diandi\Lexer($file);
@@ -40,8 +40,20 @@ $factor = Parser::rule()->or(
         $primary
     );
 $expr = $expr0->expression(\diandi\stone\ast\BinaryExpr::class, $factor, $operators);
+
+$statement0 = Parser::rule();
+$block = Parser::rule(\diandi\stone\ast\BlockStmnt::class)->sep("{")->option($statement0)
+->repeat(Parser::rule()->sep(";", new EOFToken())->option($statement0))->sep("}");
+$simple = Parser::rule(PrimaryExpr::class)->ast($expr);
+$statement = $statement0->or(Parser::rule(\diandi\stone\ast\IfStmnt::class)->sep("if")->ast($expr)
+->ast($block)->option(Parser::rule()->sep("else")->ast($block)),
+    Parser::rule(\diandi\stone\ast\WhileStmnt::class)->sep("while")->ast($expr)->ast($block), $simple);
+
+$program = Parser::rule()->or($statement, Parser::rule(\diandi\stone\ast\NullStmnt::class))->sep(";",
+    new EOFToken());
 while ( !($l->peek(0) instanceof  \diandi\stone\token\EOFToken)) {//读取下一个token不是结束
-    $ast = $expr->parse($l);
+    $ast = $program->parse($l);
     print_r("=> " . $ast->toString());
     echo "\n";
 }
+//@todo 对$block 在java进行测试 确定$expr0

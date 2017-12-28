@@ -24,7 +24,7 @@ class Repeat extends Element
     }
     public function parse(Lexer $lexer, array &$list)
     {
-        while ($this->parser.match($lexer))
+        while ($this->parser->match($lexer))
         {
             $t = $this->parser->parse($lexer);
             if (get_class($t)!=ASTList::class || $t->numChildren()>0)

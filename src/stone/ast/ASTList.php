@@ -27,7 +27,7 @@ class ASTList extends \diandi\stone\ast\ASTree
             $str []= $child->toString();
         }
         $str = implode(' ',$str);
-        $str .= '('.$str.')';
+        $str = '('.$str.')';
         return $str;
     }
     public function location()
