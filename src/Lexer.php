@@ -13,7 +13,7 @@ class Lexer
     private $queue = [];
     private $hasMore = true;
                                   //   注释 2  |数字 3   |字符串(4) 5?             |变量(6)                     |+=*/ == >= <= && || ;(7)
-    private  static  $regexPat = '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|(==|<=|>=|&&|\|\||[\(\)=+\-\*\/;]))?/';
+    private  static  $regexPat = '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|(\n|{|}|==|<=|>=|&&|\|\||[\(\)=+\-\*\/;]))?/';
      //todo 仅支持+=/×；其他特殊字符有待完善
     public function __construct(string $file)
     {
@@ -47,14 +47,26 @@ class Lexer
         if($line = fgets($this->fp))
         {
             $this->lineNum++;
+//            $regexPat = '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|(\n|{|}|==|<=|>=|&&|\|\||[\(\)=+\-\*\/;]))?/';
+//            $regexPat2= '/\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|([A-Z_a-z][A-Z_a-z0-9]*)|({|}|==|<=|>=|&&|\|\||[\(\)=+\-\*\/;]))?/';
+//            preg_match_all($regexPat,$line,$matches);
+//
+//            print_r($matches);
+//            echo "ss".$matches[7][3]."ss";
+//            exit;
+
             preg_match_all(self::$regexPat,$line,$matches);
             $lastPos = 0;
-            foreach ($matches[1] as $code)
+            foreach ($matches[0] as $code)
             {
-                if (empty($code))
+               if (empty($code))
                 {
                     continue;
                 }
+//                if ($code === "\n")
+//                {
+//
+//                }
                 $startPos = strpos($line,$code);
                 $len = strlen($code);
                 $line = substr($line,$startPos+$len);

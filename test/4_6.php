@@ -6,8 +6,18 @@ use diandi\stone\token\EOFToken;
 use diandi\stone\Parser;
 
 require __DIR__ . '/../vendor/autoload.php';
-$file = 'lan4_5';
-
+$file = 'lan4_6';
+//$str ="ss
+//ss";
+//preg_match_all("/\n/",$str,$m);
+//print_r($m);
+//if ($m[0][0] ==="\n")
+//{
+//    echo "n!";
+//}
+//exit;
+//
+//echo $str;exit;
 
 $l = new \diandi\Lexer($file);
 $basic = new \diandi\stone\BasicParser();
@@ -60,10 +70,12 @@ $statement = $statement0->or(
                                                                                     ->ast($block),
                             $simple);
 
-//$program = Parser::rule()->or($statement, Parser::rule(\diandi\stone\ast\NullStmnt::class))->sep(";",
-//    new EOFToken());
+$program = Parser::rule()->or(
+    $statement,
+    Parser::rule(\diandi\stone\ast\NullStmnt::class)
+    )->sep(";", new EOFToken());
 while ( !($l->peek(0) instanceof  \diandi\stone\token\EOFToken)) {//读取下一个token不是结束
-    $ast = $block->parse($l);
+    $ast = $program->parse($l);
     print_r("=> " . $ast->toString());
     echo "\n";
 }
