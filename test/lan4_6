@@ -1,6 +1,6 @@
-i=3
-j = i + 3
+i=3; // dafdsaf
+j = i + 3;
 while i < 4 {
-    j = j+i
-    i = i+1
+    j = j+i;
+    i = i+1;
 }

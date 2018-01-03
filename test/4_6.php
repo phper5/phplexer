@@ -7,17 +7,7 @@ use diandi\stone\Parser;
 
 require __DIR__ . '/../vendor/autoload.php';
 $file = 'lan4_6';
-//$str ="ss
-//ss";
-//preg_match_all("/\n/",$str,$m);
-//print_r($m);
-//if ($m[0][0] ==="\n")
-//{
-//    echo "n!";
-//}
-//exit;
-//
-//echo $str;exit;
+
 
 $l = new \diandi\Lexer($file);
 $basic = new \diandi\stone\BasicParser();

@@ -13,6 +13,7 @@ use diandi\Lexer;
 use diandi\stone\ast\ASTLeaf;
 use diandi\stone\ast\ASTList;
 use diandi\stone\ParseException;
+use diandi\stone\token\EOFToken;
 use diandi\stone\token\Token;
 
 class Leaf extends Element
@@ -54,6 +55,10 @@ class Leaf extends Element
                     return ;
                 }
             }
+        }
+        if ($token instanceof  EOFToken)
+        {
+            return ;
         }
         if (count($this->tokens)>0)
         {

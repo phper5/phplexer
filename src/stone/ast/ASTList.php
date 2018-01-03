@@ -17,7 +17,7 @@ class ASTList extends \diandi\stone\ast\ASTree
     }
     public function child(int $i)
     {
-        return $this->children[$i];
+        return ($this->children[$i])->toString();
     }
     public function toString()
     {
